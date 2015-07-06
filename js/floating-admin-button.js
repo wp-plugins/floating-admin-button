@@ -9,15 +9,19 @@ jQuery(document).ready(function(){
 	if(fab_showbutton)
 	{	/* HIDE THE WORDPRESS ADMIN BAR */
 		jQuery("#wpadminbar").hide();
+		/* v1.0.1 - REMOVE THE SPACE FOR THE ADMIN BAR */
+		jQuery("html").attr('style', 'margin-top: 0px !important');
 		/* SHOW BUTTON */
 		jQuery("#adminButton").show();
 	}
 	else
 	{	/* SHOW THE WORDPRESS ADMIN BAR */
 		jQuery("#wpadminbar").show();
+		/* v1.0.1 - MAKE ROOM FOR THE ADMIN BAR */
+		jQuery("html").attr('style', 'margin-top: 32px !important');
 		/* HIDE BUTTON */
 		jQuery("#adminButton").hide();
-	}
+	}	
 
 	/* ADD A NEW 'adminButton' DIV TO THE AND OF THE BODY */
 	var $div = jQuery('<div />').appendTo('body');
@@ -94,7 +98,14 @@ jQuery(document).ready(function(){
 		if(((fab_shift_ctrl == 'shift' && event.shiftKey) || (fab_shift_ctrl == 'ctrl' && event.ctrlKey)) && event.which == fab_keycode)
 		{	/* HOTKEY PRESSED: TOGGLE BETWEEN BUTTON AND BAR */
 			jQuery("#adminButton").toggle();			
-			jQuery("#wpadminbar").toggle();		
+			jQuery("#wpadminbar").toggle();
+			// v1.0.1
+			if (jQuery("#adminButton").is(":visible"))
+				// IN BUTTON MODE: RECLAIM ADMIN BAR SPACE
+				jQuery("html").attr('style', 'margin-top: 0px !important');
+			else
+				// IN ADMIN BAR MODE: MAKE ROOM FOR THE BAR
+				jQuery("html").attr('style', 'margin-top: 32px !important');
 		}
 	});
 });		

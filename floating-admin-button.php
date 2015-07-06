@@ -3,8 +3,8 @@
 Plugin Name: Floating Admin Button
 Plugin URI: http://cagewebdev.com/floating-admin-button
 Description: On frontend pages this plugin shows a floating admin button instead of the admin bar
-Version: 1.0
-Date: 07/06/2015
+Version: 1.0.1
+Date: 07/07/2015
 Author: Rolf van Gelder
 Author URI: http://cagewebdev.com
 License: GPLv2 or later
@@ -19,8 +19,8 @@ if (!session_id()) session_start();
  ***********************************************************************************/	 
 class Fab
 {
-	var $fab_version = '1.0';
-	var $fab_release_date = '07/06/2015';
+	var $fab_version = '1.0.1';
+	var $fab_release_date = '07/07/2015';
 
 	
 	/*******************************************************************************
