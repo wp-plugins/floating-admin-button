@@ -8,14 +8,14 @@ Author URI: http://rvg.cage.nl
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
 Tested up to: 4.2.2
-Stable tag: 1.0
-Version: 1.0
+Stable tag: 1.0.1
+Version: 1.0.1
 License: GPLv2 or later
 
 == Description ==
 
 = This plugin replaces the admin bar (at the top of the frontend screen) by a sticky 'Go To Admin Screen' button =
-
+<br />
 It's a, lightweight, jQuery based plugin.<br />
 The best part: you can drag and drop the button to anywhere you want!<br />
 The new position will be used till the session ends.<br />
@@ -61,5 +61,8 @@ http://cagewebdev.com/index.php/wordpress-plugins/
 * Press the hotkey as defined on the settings page (default key: CTRL-F8)
 
 == Changelog ==
+= v1.0.1 [07/07/2015] =
+* BUG FIX: Some minor bug fixes
+
 = v1.0 [07/06/2015] =
 * Initial release
