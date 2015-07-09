@@ -8,8 +8,8 @@ Author URI: http://rvg.cage.nl
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
 Tested up to: 4.2.2
-Stable tag: 1.0.1
-Version: 1.0.1
+Stable tag: 1.0.2
+Version: 1.0.2
 License: GPLv2 or later
 
 == Description ==
@@ -61,6 +61,11 @@ http://cagewebdev.com/index.php/wordpress-plugins/
 * Press the hotkey as defined on the settings page (default key: CTRL-F8)
 
 == Changelog ==
+= v1.0.2 [07/09/2015] =
+* NEW: added a 'Back to Default Position' button (settings page)
+* CHANGE: position of the button has been constraint
+* CHANGE: several improvements
+
 = v1.0.1 [07/07/2015] =
 * BUG FIX: Some minor bug fixes
 

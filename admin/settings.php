@@ -61,18 +61,19 @@ if (isset($_POST['action']) && 'save_settings' === $_POST['action'])
 /***********************************************************************************
  * 	FORM
  ***********************************************************************************/
- $fab_dragged_text = '';
- if(isset($_SESSION['fab_top']))
- {	// BUTTON HAS BEEN DRAGGED DURING THIS SESSION
+$fab_dragged_text = '';
+if(isset($_SESSION['fab_bottom']))
+{	// BUTTON HAS BEEN DRAGGED DURING THIS SESSION
 	$fab_dragged_text = __('Button has been dragged, new Position is', 'floating-admin-button');
 	$fab_dragged_text .= ' ';
-	$fab_dragged_text .= __('TOP:', 'floating-admin-button');
-	$fab_dragged_text .= ' ';
-	$fab_dragged_text .= $_SESSION['fab_top'].'px, ';
 	$fab_dragged_text .= __('LEFT:', 'floating-admin-button');
 	$fab_dragged_text .= ' ';
-	$fab_dragged_text .= $_SESSION['fab_left'].'px';	
- }
+	$fab_dragged_text .= $_SESSION['fab_left'].'px, ';
+	$fab_dragged_text .= __('BOTTOM:', 'floating-admin-button');
+	$fab_dragged_text .= ' ';
+	$fab_dragged_text .= $_SESSION['fab_bottom'].'px';	
+}
+$fab_ajax_url = admin_url('admin-ajax.php'); 
 ?>
 <div id="fab-settings-form">
   <form name="fab_settings" id="fab_settings" method="post" action="">
@@ -165,7 +166,17 @@ if (isset($_POST['action']) && 'save_settings' === $_POST['action'])
             <?php _e('Upper Left', 'floating-admin-button');?>
             </option>
           </select>
-          &nbsp;<span class="fab_note"><?php echo $fab_dragged_text; ?></span></td>
+          <?php
+		  if($fab_dragged_text)
+		  {
+		  ?>
+          <span class="fab-note" id="fab-note"><br />
+          <?php echo $fab_dragged_text; ?><br />
+          <input class="button-primary button-large fab-reset-button" type='button' name='fab-reset-button' value='<?php echo __('Back to Default Position', 'floating-admin-button');?>' onclick="fab_reset_position('<?php echo $fab_ajax_url?>')"; /></span>
+          <?php
+		  }
+		  ?>
+        </td>
       </tr>
       <script type="text/javascript">
       jQuery('#fab_position').val("<?php echo $this->fab_options['position'];?>");
