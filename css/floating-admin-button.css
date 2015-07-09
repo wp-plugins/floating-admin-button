@@ -12,7 +12,7 @@
 	width: 38px;
 	height: 38px;
 	text-indent: -999999px;
-	z-index: 9999999;
+	z-index: 999999999;
 	-khtml-opacity: .70;
 	-moz-opacity: .70;
 	-ms-filter: "alpha(opacity=70)";
@@ -20,6 +20,7 @@
  	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.7);
 	opacity: .70;
 	cursor: pointer;
+	/*border: solid 1px #FF0000;*/
 }
 /****************************
  *	SETTINGS PAGE
@@ -46,11 +47,17 @@
 	padding-left: 5px;
 	margin-bottom: 20px;
 }
+.fab-reset-button {
+	margin-top: 4px !important;
+}
 #fab_settings input[type="text"] {
-	font-size: inherit;
+	font-size: 13px;
 	margin-right: 10px;
 }
-.fab_note {
+#fab_settings select {
+	font-size: 13px;
+}
+.fab-note {
 	color: #0074a2;
 	font-style: italic;
 	font-weight: bold;

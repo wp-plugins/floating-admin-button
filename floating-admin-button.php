@@ -3,8 +3,8 @@
 Plugin Name: Floating Admin Button
 Plugin URI: http://cagewebdev.com/floating-admin-button
 Description: On frontend pages this plugin shows a floating admin button instead of the admin bar
-Version: 1.0.1
-Date: 07/07/2015
+Version: 1.0.2
+Date: 07/09/2015
 Author: Rolf van Gelder
 Author URI: http://cagewebdev.com
 License: GPLv2 or later
@@ -19,8 +19,8 @@ if (!session_id()) session_start();
  ***********************************************************************************/	 
 class Fab
 {
-	var $fab_version = '1.0.1';
-	var $fab_release_date = '07/07/2015';
+	var $fab_version = '1.0.2';
+	var $fab_release_date = '07/09/2015';
 
 	
 	/*******************************************************************************
@@ -67,7 +67,8 @@ class Fab
 		else if (is_user_logged_in())
 		{	// BACKEND PAGE
 			add_action('admin_menu', array(&$this, 'fab_admin_menu'));
-			add_filter('plugin_action_links_'.plugin_basename(__FILE__), array(&$this, 'fab_settings_link'));	
+			add_filter('plugin_action_links_'.plugin_basename(__FILE__), array(&$this, 'fab_settings_link'));
+			add_action('admin_enqueue_scripts', array(&$this, 'fab_be_scripts'));
 		} // if($this->fab_is_frontend_page() && is_user_logged_in())
 	} // fab_init()
 	
@@ -152,9 +153,20 @@ class Fab
 	 * 	LOAD FRONTEND JAVASCRIPT
 	 *******************************************************************************/
 	function fab_fe_scripts()
-	{	wp_register_script('fab-active', plugins_url('js/floating-admin-button.js', __FILE__), array('jquery', 'jquery-ui-draggable'), '1.0', true);
-		wp_enqueue_script('fab-active');
+	{	// true: in footer
+		wp_register_script('fab-frontend', plugins_url('js/floating-admin-button-fe.js', __FILE__), array('jquery', 'jquery-ui-draggable'), '1.0', true);
+		wp_enqueue_script('fab-frontend');
 	} // fab_fe_scripts()
+	
+	
+	/*******************************************************************************
+	 * 	LOAD BACKEND JAVASCRIPT
+	 *******************************************************************************/
+	function fab_be_scripts()
+	{	// false: in header
+		wp_register_script('fab-backend', plugins_url('js/floating-admin-button-be.js', __FILE__), array('jquery', 'jquery-ui-draggable'), '1.0', false);
+		wp_enqueue_script('fab-backend');
+	} // fab_be_scripts()	
 
 	
 	/*******************************************************************************
@@ -167,25 +179,28 @@ class Fab
 		$fab_admin_url = admin_url();	
 		
 		// BUTTON HAS BEEN DRAGGED DURING THIS SESSION?
-		$fab_top = -1;
-		if(isset($_SESSION['fab_top']))  $fab_top  = $_SESSION['fab_top'];
+		$fab_bottom = -1;
+		if(isset($_SESSION['fab_bottom'])) $fab_bottom  = $_SESSION['fab_bottom'];
 		$fab_left = -1;
-		if(isset($_SESSION['fab_left'])) $fab_left = $_SESSION['fab_left'];
+		if(isset($_SESSION['fab_left']))   $fab_left    = $_SESSION['fab_left'];
+		
+		$fab_spacing_int = substr($this->fab_options['spacing'], 0, strlen($this->fab_options['spacing']) - 2);
 		
 		echo '
 <!-- START Floating Admin Button v'.$this->fab_version.' ['.$this->fab_release_date.'] | http://cagewebdev.com/floating-admin-button | CAGE Web Design | Rolf van Gelder -->
 <script type="text/javascript">
-var fab_showbutton = "'.$this->fab_options['showbutton'].'";
-var fab_shift_ctrl = "'.$this->fab_options['shift_ctrl'].'";
-var fab_keycode    = "'.$this->fab_options['keycode'].'";
-var fab_position   = "'.$this->fab_options['position'].'";
-var fab_top        = "'.$fab_top.'";
-var fab_left       = "'.$fab_left.'";
-var fab_spacing    = "'.$this->fab_options['spacing'].'";
-var fab_scrolltext = "'.$this->fab_options['scrolltext'].'";
-var fab_imgurl     = "'.$this->imgurl.'wp_logo.png";
-var fab_ajaxurl    = "'.$fab_ajax_url.'";
-var fab_adminurl   = "'.$fab_admin_url.'";
+var fab_showbutton  = "'.$this->fab_options['showbutton'].'";
+var fab_shift_ctrl  = "'.$this->fab_options['shift_ctrl'].'";
+var fab_keycode     = "'.$this->fab_options['keycode'].'";
+var fab_position    = "'.$this->fab_options['position'].'";
+var fab_bottom      = "'.$fab_bottom.'";
+var fab_left        = "'.$fab_left.'";
+var fab_spacing     = "'.$this->fab_options['spacing'].'";
+var fab_spacing_int = '.$fab_spacing_int.';
+var fab_scrolltext  = "'.$this->fab_options['scrolltext'].'";
+var fab_imgurl      = "'.$this->imgurl.'wp_logo.png";
+var fab_ajaxurl     = "'.$fab_ajax_url.'";
+var fab_adminurl    = "'.$fab_admin_url.'";
 </script>
 <!-- END Floating Admin Button -->
 ';
@@ -202,11 +217,21 @@ $fab_class = new Fab;
  *******************************************************************************/
 function fab_action_callback()
 {
-	// SAVE THE CURRENT BUTTON POSITION TO SESSION VARIABLES
-	$_SESSION['fab_top']  = sanitize_text_field($_POST['fab_top']);
-	$_SESSION['fab_left'] = sanitize_text_field($_POST['fab_left']);
+	$action = sanitize_text_field($_POST['fab_action']);
 	
-	echo 'OK';
+	// SAVE THE CURRENT BUTTON POSITION TO SESSION VARIABLES
+	if($action == 'set_position')
+	{
+		$_SESSION['fab_bottom']  = sanitize_text_field($_POST['fab_bottom']);
+		$_SESSION['fab_left']    = sanitize_text_field($_POST['fab_left']);
+	}
+	else if ($action == 'reset_position')
+	{
+		unset($_SESSION['fab_bottom']);
+		unset($_SESSION['fab_left']);
+	}
+	
+	echo $_POST['fab_bottom'];
 	
 	// NEEDED FOR AN AJAX SERVER
 	die();
