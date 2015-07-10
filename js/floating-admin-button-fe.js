@@ -7,16 +7,10 @@ var fab_current_bottom = -1;
 var fab_current_left   = -1;
 var fab_max_bottom     = -1;
 var fab_max_left       = -1;
-var fab_button_width   = -1;
-var fab_button_height  = -1;
+var fab_button_width   = 38;
+var fab_button_height  = 38;
 
 jQuery(document).ready(function(){
-
-	/* GET THE SIZE OF THE BUTTON */	
-	var fab_img       = new Image();
-	fab_img.src       = fab_imgurl;
-	fab_button_width  = fab_img.width;
-	fab_button_height = fab_img.height;
 	
 	/* INITIALLY SHOW THE BUTTON OR THE BAR */
 	if(fab_showbutton)
