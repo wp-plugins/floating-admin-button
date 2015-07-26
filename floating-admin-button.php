@@ -3,8 +3,8 @@
 Plugin Name: Floating Admin Button
 Plugin URI: http://cagewebdev.com/floating-admin-button
 Description: On frontend pages this plugin shows a floating admin button instead of the admin bar
-Version: 1.0.3
-Date: 07/10/2015
+Version: 1.0.4
+Date: 07/26/2015
 Author: Rolf van Gelder
 Author URI: http://cagewebdev.com
 License: GPLv2 or later
@@ -19,8 +19,8 @@ if (!session_id()) session_start();
  ***********************************************************************************/	 
 class Fab
 {
-	var $fab_version = '1.0.3';
-	var $fab_release_date = '07/10/2015';
+	var $fab_version = '1.0.4';
+	var $fab_release_date = '07/26/2015';
 	
 	/*******************************************************************************
 	 * 	CONSTRUCTOR
@@ -213,29 +213,34 @@ $fab_class = new Fab;
 
 /*******************************************************************************
  * 	AJAX SERVER FOR UPDATING THE CURRENT BUTTON POSITION
+ *
+ *	v1.7.1: BUG FIXES
  *******************************************************************************/
 function fab_action_callback()
 {
-	$action = sanitize_text_field($_POST['fab_action']);
-	
-	// SAVE THE CURRENT BUTTON POSITION TO SESSION VARIABLES
-	if($action == 'set_position')
+	if(isset($_POST['fab_action']))
 	{
-		$_SESSION['fab_bottom']  = sanitize_text_field($_POST['fab_bottom']);
-		$_SESSION['fab_left']    = sanitize_text_field($_POST['fab_left']);
+		$action = sanitize_text_field($_POST['fab_action']);
+		
+		// SAVE THE CURRENT BUTTON POSITION TO SESSION VARIABLES
+		if($action == 'set_position')
+		{
+			$_SESSION['fab_bottom'] = sanitize_text_field($_POST['fab_bottom']);
+			$_SESSION['fab_left']   = sanitize_text_field($_POST['fab_left']);
+		}
+		else if ($action == 'reset_position')
+		{
+			unset($_SESSION['fab_bottom']);
+			unset($_SESSION['fab_left']);
+		}
+		
+		if(isset($_POST['fab_bottom'])) echo $_POST['fab_bottom'];
 	}
-	else if ($action == 'reset_position')
-	{
-		unset($_SESSION['fab_bottom']);
-		unset($_SESSION['fab_left']);
-	}
-	
-	echo $_POST['fab_bottom'];
-	
+
 	// NEEDED FOR AN AJAX SERVER
-	die();
+	wp_die();
 } // fab_action_callback()
 
 // ADD AJAX SERVER
-add_action('wp_ajax_my_action', 'fab_action_callback');	
+add_action( 'wp_ajax_fab_action', 'fab_action_callback' );
 ?>
