@@ -2,7 +2,7 @@ function fab_reset_position(fab_ajaxurl)
 {
 	/* PARAMETERS FOR THE AJAX CALL */
 	var data = {
-		'action': 'my_action',
+		'action': 'fab_action',	// v1.0.4
 		'fab_action': 'reset_position'
 	};
 	

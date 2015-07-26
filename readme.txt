@@ -7,9 +7,9 @@ Tags: jQuery, floating admin button, admin panel, admin bar, backend, frontend, 
 Author URI: http://rvg.cage.nl
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
-Tested up to: 4.2.2
-Stable tag: 1.0.3
-Version: 1.0.3
+Tested up to: 4.2.3
+Stable tag: 1.0.4
+Version: 1.0.4
 License: GPLv2 or later
 
 == Description ==
@@ -61,6 +61,9 @@ http://cagewebdev.com/index.php/wordpress-plugins/
 * Press the hotkey as defined on the settings page (default key: CTRL-F8)
 
 == Changelog ==
+= v1.0.4 [07/26/2015] =
+* BUG FIX: bugs fixed for ajax calls
+
 = v1.0.3 [07/10/2015] =
 * BUG FIX: button was in some browsers 'jumping'
 

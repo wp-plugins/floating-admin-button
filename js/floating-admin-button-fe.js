@@ -180,7 +180,7 @@ function fab_update_position()
 	
 	/* PARAMETERS FOR THE AJAX CALL */
 	var data = {
-		'action': 'my_action',
+		'action': 'fab_action',	// v1.0.4
 		'fab_action': 'set_position',
 		'fab_left': fab_current_left,
 		'fab_bottom': fab_current_bottom
