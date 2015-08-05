@@ -16,10 +16,11 @@ if (isset($_POST['action']) && 'save_settings' === $_POST['action'])
 	if (strlen($safe_keycode) > 3)
 	  $safe_keycode = substr($safe_keycode, 0, 3);
 
+	// FIXED IN v1.0.5
 	if (isset($_POST['fab_showbutton']))
-		$this->fab_options['showbutton'] = sanitize_text_field($_POST['fab_showbutton']);
-	else
 		$this->fab_options['showbutton'] = 'Y';
+	else
+		$this->fab_options['showbutton'] = 'N';
 
 	$this->fab_options['shift_ctrl'] = sanitize_text_field($_POST['fab_shift_ctrl']);
 	$this->fab_options['keycode']    = $safe_keycode;
@@ -92,7 +93,7 @@ $fab_ajax_url = admin_url('admin-ajax.php');
       </tr>
       <tr>
         <td valign="top" colspan="2" class="fab_note"><?php _e('Note: select a Key Combination that is not already used by your Browser!', 'floating-admin-button');?></td>
-      </tr>      
+      </tr>
       <tr>
         <td valign="top"><?php _e('Key Combination for toggling<br />between Button and Bar', 'floating-admin-button'); ?></td>
         <td valign="top"><select name="fab_shift_ctrl" id="fab_shift_ctrl">
@@ -116,7 +117,7 @@ $fab_ajax_url = admin_url('admin-ajax.php');
             </option>
             <option value="115">
             <?php _e('F4', 'floating-admin-button');?>
-            </option>            
+            </option>
             <option value="116">
             <?php _e('F5', 'floating-admin-button');?>
             </option>
@@ -131,22 +132,22 @@ $fab_ajax_url = admin_url('admin-ajax.php');
             </option>
             <option value="120">
             <?php _e('F9', 'floating-admin-button');?>
-            </option>            
+            </option>
             <option value="121">
             <?php _e('F10', 'floating-admin-button');?>
             </option>
             <option value="122">
             <?php _e('F11', 'floating-admin-button');?>
-            </option>            
+            </option>
             <option value="123">
             <?php _e('F12', 'floating-admin-button');?>
-            </option>                        
+            </option>
           </select></td>
       </tr>
       <script type="text/javascript">
       jQuery('#fab_shift_ctrl').val("<?php echo $this->fab_options['shift_ctrl'];?>");
       jQuery('#fab_keycode').val("<?php echo $this->fab_options['keycode'];?>");	  
-      </script>      
+      </script>
       <tr>
         <td valign="top" colspan="2" class="fab_note"><?php _e('Note: dragging the Button will (temporary) overwrite the default Position!', 'floating-admin-button');?></td>
       </tr>
@@ -172,11 +173,11 @@ $fab_ajax_url = admin_url('admin-ajax.php');
 		  ?>
           <span class="fab-note" id="fab-note"><br />
           <?php echo $fab_dragged_text; ?><br />
-          <input class="button-primary button-large fab-reset-button" type='button' name='fab-reset-button' value='<?php echo __('Back to Default Position', 'floating-admin-button');?>' onclick="fab_reset_position('<?php echo $fab_ajax_url?>')"; /></span>
+          <input class="button-primary button-large fab-reset-button" type='button' name='fab-reset-button' value='<?php echo __('Back to Default Position', 'floating-admin-button');?>' onclick="fab_reset_position('<?php echo $fab_ajax_url?>')"; />
+          </span>
           <?php
 		  }
-		  ?>
-        </td>
+		  ?></td>
       </tr>
       <script type="text/javascript">
       jQuery('#fab_position').val("<?php echo $this->fab_options['position'];?>");
