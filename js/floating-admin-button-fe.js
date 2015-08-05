@@ -13,7 +13,7 @@ var fab_button_height  = 38;
 jQuery(document).ready(function(){
 	
 	/* INITIALLY SHOW THE BUTTON OR THE BAR */
-	if(fab_showbutton)
+	if(fab_showbutton == 'Y') // v1.0.5
 	{	/* HIDE THE WORDPRESS ADMIN BAR */
 		jQuery("#wpadminbar").hide();
 		/* v1.0.1 - REMOVE THE SPACE FOR THE ADMIN BAR */
@@ -28,9 +28,9 @@ jQuery(document).ready(function(){
 		jQuery("html").attr('style', 'margin-top: 32px !important');
 		/* HIDE BUTTON */
 		jQuery("#adminButton").hide();
-	}	
+	}
 
-	/* ADD A NEW 'adminButton' DIV TO THE AND OF THE BODY */
+	/* ADD A NEW 'adminButton' DIV TO THE END OF THE BODY */
 	var $div = jQuery('<div />').appendTo('body');
 	$div.attr('id', 'adminButton');
 	
@@ -39,6 +39,7 @@ jQuery(document).ready(function(){
 	
 	/* SET THE A BACKGROUND IMAGE FOR THE BUTTON */
 	jQuery("#adminButton").css({"background-image":"url("+fab_imgurl+")"});
+	if(fab_showbutton == 'N') jQuery("#adminButton").hide(); // v1.0.5
 
 	/* ADD MOUSEOVER EFFECT */	
 	jQuery("#adminButton").mouseover(function() {
