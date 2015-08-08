@@ -3,8 +3,8 @@
 Plugin Name: Floating Admin Button
 Plugin URI: http://cagewebdev.com/floating-admin-button
 Description: On frontend pages this plugin shows a floating admin button instead of the admin bar
-Version: 1.0.5
-Date: 08/05/2015
+Version: 1.0.6
+Date: 08/08/2015
 Author: Rolf van Gelder
 Author URI: http://cagewebdev.com
 License: GPLv2 or later
@@ -19,8 +19,8 @@ if (!session_id()) session_start();
  ***********************************************************************************/	 
 class Fab
 {
-	var $fab_version = '1.0.5';
-	var $fab_release_date = '08/05/2015';
+	var $fab_version = '1.0.6';
+	var $fab_release_date = '08/08/2015';
 	
 	/*******************************************************************************
 	 * 	CONSTRUCTOR
@@ -174,21 +174,25 @@ class Fab
 	function fab_javascript_vars()
 	{
 		// URL FOR THE AJAX SERVER (NEEDED FOR FRONTEND OPERATION, ajaxurl DOESN'T WORK ON THE FRONTEND)
-		$fab_ajax_url = admin_url('admin-ajax.php');
+		$fab_ajax_url  = admin_url('admin-ajax.php');
 		$fab_admin_url = admin_url();	
 		
 		// BUTTON HAS BEEN DRAGGED DURING THIS SESSION?
 		$fab_bottom = -1;
 		if(isset($_SESSION['fab_bottom'])) $fab_bottom  = $_SESSION['fab_bottom'];
-		$fab_left = -1;
+		$fab_left   = -1;
 		if(isset($_SESSION['fab_left']))   $fab_left    = $_SESSION['fab_left'];
+
+		// v1.0.6
+		$fab_showbutton = $this->fab_options['showbutton'];
+		if(isset($_SESSION['fab_showbutton'])) $fab_showbutton = $_SESSION['fab_showbutton'];
 		
 		$fab_spacing_int = substr($this->fab_options['spacing'], 0, strlen($this->fab_options['spacing']) - 2);
 		
 		echo '
 <!-- START Floating Admin Button v'.$this->fab_version.' ['.$this->fab_release_date.'] | http://cagewebdev.com/floating-admin-button | CAGE Web Design | Rolf van Gelder -->
 <script type="text/javascript">
-var fab_showbutton  = "'.$this->fab_options['showbutton'].'";
+var fab_showbutton  = "'.$fab_showbutton.'";
 var fab_shift_ctrl  = "'.$this->fab_options['shift_ctrl'].'";
 var fab_keycode     = "'.$this->fab_options['keycode'].'";
 var fab_position    = "'.$this->fab_options['position'].'";
@@ -214,7 +218,7 @@ $fab_class = new Fab;
 /*******************************************************************************
  * 	AJAX SERVER FOR UPDATING THE CURRENT BUTTON POSITION
  *
- *	v1.7.1: BUG FIXES
+ *	v1.0.6: set_showbutton added
  *******************************************************************************/
 function fab_action_callback()
 {
@@ -227,6 +231,10 @@ function fab_action_callback()
 		{
 			$_SESSION['fab_bottom'] = sanitize_text_field($_POST['fab_bottom']);
 			$_SESSION['fab_left']   = sanitize_text_field($_POST['fab_left']);
+		}
+		else if ($action == 'set_showbutton')
+		{	// v1.0.6
+			$_SESSION['fab_showbutton'] = sanitize_text_field($_POST['fab_showbutton']);
 		}
 		else if ($action == 'reset_position')
 		{

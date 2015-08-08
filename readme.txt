@@ -8,8 +8,8 @@ Author URI: http://rvg.cage.nl
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
 Tested up to: 4.2.4
-Stable tag: 1.0.5
-Version: 1.0.5
+Stable tag: 1.0.6
+Version: 1.0.6
 License: GPLv2 or later
 
 == Description ==
@@ -61,6 +61,9 @@ http://cagewebdev.com/index.php/wordpress-plugins/
 * Press the hotkey as defined on the settings page (default key: CTRL-F8)
 
 == Changelog ==
+= v1.0.6 [08/08/2015] =
+* CHANGE: the show/hide button status is now saved in a session variable
+
 = v1.0.5 [08/05/2015] =
 * BUG FIX: the 'Initially show the Floating Admin Button instead of the WP Admin Bar' option wasn't saved correctly
 
