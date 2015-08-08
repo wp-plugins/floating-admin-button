@@ -95,12 +95,20 @@ jQuery(document).ready(function(){
 		}	
 	}
 	
-	/* TOGGLE BUTTON AND BAR WHEN THE CUSTOM HOTKEY IS PRESSED (DEFAULT: CTRL-F8 */
+	/* TOGGLE BUTTON AND BAR WHEN THE CUSTOM HOTKEY IS PRESSED (DEFAULT: CTRL-F8) */
 	jQuery(document).keydown(function(event) {
 		if(((fab_shift_ctrl == 'shift' && event.shiftKey) || (fab_shift_ctrl == 'ctrl' && event.ctrlKey)) && event.which == fab_keycode)
 		{	/* HOTKEY PRESSED: TOGGLE BETWEEN BUTTON AND BAR */
 			jQuery("#adminButton").toggle();			
 			jQuery("#wpadminbar").toggle();
+			if(jQuery("#adminButton").is(":visible"))
+			{	fab_showbutton = "Y";
+			}
+			else
+			{	fab_showbutton = "N";
+			}
+			// v1.0.6
+			fab_update_showbutton();
 			// v1.0.1
 			if (jQuery("#adminButton").is(":visible"))
 				/* IN BUTTON MODE: RECLAIM ADMIN BAR SPACE */
@@ -177,14 +185,13 @@ function fab_calc_bottom()
  * -------------------------------------------------*/
 function fab_update_position()
 {
-	// var pos = jQuery("#adminButton").position();
-	
 	/* PARAMETERS FOR THE AJAX CALL */
 	var data = {
 		'action': 'fab_action',	// v1.0.4
 		'fab_action': 'set_position',
 		'fab_left': fab_current_left,
-		'fab_bottom': fab_current_bottom
+		'fab_bottom': fab_current_bottom,
+		'fab_showbutton': fab_showbutton
 	};
 
 	/* ---------------------------------------------------
@@ -195,6 +202,32 @@ function fab_update_position()
 	jQuery.post(fab_ajaxurl, data, function(response){
 	});
 } // fab_update_position()
+
+
+/* ---------------------------------------------------
+ *
+ *	UPDATE THE CURRENT SHOW/HIDE BUTTON VALUE
+ *
+ *	Since v1.0.6
+ *
+ * -------------------------------------------------*/
+function fab_update_showbutton()
+{
+	/* PARAMETERS FOR THE AJAX CALL */
+	var data = {
+		'action': 'fab_action',
+		'fab_action': 'set_showbutton',
+		'fab_showbutton': fab_showbutton
+	};
+
+	/* ---------------------------------------------------
+	 *	CALL THE AJAX SERVER:
+	 *	THIS WILL CREATE / UPDATE THE SHOW / HIDE BUTTON
+	 *	STATUS
+	 * -------------------------------------------------*/
+	jQuery.post(fab_ajaxurl, data, function(response){
+	});
+} // fab_update_showbutton()
 
 
 /* ---------------------------------------------------
